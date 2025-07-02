@@ -1,0 +1,30 @@
+{
+  "name": "@railgun-reloaded/note-commitment-tree",
+  "version": "1.0.0",
+  "description": "Note Commitment tree management for Railgun",
+  "homepage": "https://github.com/railgun-reloaded/note-commitment-tree#readme",
+  "bugs": {
+    "url": "https://github.com/railgun-reloaded/note-commitment-tree/issues"
+  },
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "build": "tsc --build",
+    "clean": "tsc --build --clean"
+  },
+  "keywords": [
+    "railgun",
+    "railgun-reloaded",
+    "commitment-tree"
+  ],
+  "author": "RAILGUN Project Contributors",
+  "license": "MIT",
+  "devDependencies": {
+    "@railgun-reloaded/eslint-config": "^1.1.0",
+    "@railgun-reloaded/tsconfig": "^1.2.0",
+    "brittle": "^3.16.3",
+    "eslint": "^9.30.1",
+    "typescript": "^5.8.3"
+  }
+}
