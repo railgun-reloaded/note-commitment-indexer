@@ -5,7 +5,7 @@
 ## Install
 
 ```sh
-    npm install --save @railgun-reloaded/note-commitment-tree
+npm install --save @railgun-reloaded/note-commitment-tree
 ```
 
 ## License
