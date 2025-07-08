@@ -34,10 +34,11 @@ function uint8ArrayToHexString (array: Uint8Array) : string {
  */
 function poseidonT3 (out: Uint8Array, left: Readonly<Uint8Array>, right: Readonly<Uint8Array>) {
   // @TODO Buffer is not available in web, replace this later
-  out = Uint8Array.from(Buffer.from(poseidonHex([
-    uint8ArrayToHexString(left),
-    uint8ArrayToHexString(right)]), 'hex'))
-
+  const hashHex = poseidonHex([
+    uint8ArrayToHexString(left).substring(2),
+    uint8ArrayToHexString(right).substring(2)])
+  const result = Uint8Array.from(Buffer.from(hashHex, 'hex'))
+  out.set(result)
   return out
 }
 
