@@ -1,29 +1,5 @@
-import { poseidonHex } from '@railgun-community/poseidon-hash-wasm'
-
-/**
- * Convert a Uint8Array to a 32 byte hex string
- * @param array - Uint8Array representation of hex string
- * @returns - 0x Prefixed Hex String
- */
-function uint8ArrayToHexString (array: Uint8Array) : string {
-  // Create empty hex string
-  let hexString = ''
-
-  // Loop through each byte of array
-  array.forEach((byte) => {
-    // Convert integer representation to base 16
-    let hexByte = byte.toString(16)
-
-    // Ensure 2 chars
-    hexByte = hexByte.length === 1 ? '0' + hexByte : hexByte
-
-    // Append to hexString
-    hexString += hexByte
-  })
-
-  // Prefix with 0x
-  return `0x${hexString}`
-}
+import { bytesToHex, hexToBytes } from '@noble/hashes/utils'
+import { poseidon2 } from 'poseidon-lite'
 
 /**
  * Poseidon hash of input
@@ -33,12 +9,8 @@ function uint8ArrayToHexString (array: Uint8Array) : string {
  * @returns 32 bytes hash output
  */
 function poseidonT3 (out: Uint8Array, left: Readonly<Uint8Array>, right: Readonly<Uint8Array>) {
-  // @TODO Buffer is not available in web, replace this later
-  const hashHex = poseidonHex([
-    uint8ArrayToHexString(left).substring(2),
-    uint8ArrayToHexString(right).substring(2)])
-  const result = Uint8Array.from(Buffer.from(hashHex, 'hex'))
-  out.set(result)
+  const hash = poseidon2([`0x${bytesToHex(left)}`, `0x${bytesToHex(right)}`])
+  out.set(hexToBytes(hash.toString(16).padStart(64, '0')))
   return out
 }
 

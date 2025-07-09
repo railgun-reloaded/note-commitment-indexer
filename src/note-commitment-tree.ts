@@ -13,6 +13,7 @@ const COMMITMENT_TREE_DEPTH = 16
 // Length of each Element
 const COMMITMENT_TREE_ELEMENT_LENGTH = 32
 
+// @TODO Fix this
 // Zero Element of Railgun Note Commitment Tree
 const COMMITMENT_TREE_ZERO_ELEMENT = Field(SNARK_PRIME).toBytes(Field(SNARK_PRIME).fromBytes((keccak_256('Railgun'))) % SNARK_PRIME)
 
@@ -29,8 +30,8 @@ class NoteCommitmentTree {
    * Last leaf index of insertion
    * SparseMerkleTree keeps tracks of all the element that is inserted, but
    * if we revert some of the nodes, this is not tracked
+   * lastLeafIndex: number
    */
-  #lastLeafIndex: number
 
   /**
    * Initialize Empty Merkle tree
@@ -54,8 +55,6 @@ class NoteCommitmentTree {
         zeroElement: COMMITMENT_TREE_ZERO_ELEMENT
       })
     }
-
-    this.#lastLeafIndex = this.#merkleTree.length
   }
 
   /**
@@ -65,8 +64,6 @@ class NoteCommitmentTree {
    */
   insert (leafIndex: number, nodes: Readonly<Uint8Array | Uint8Array[]>) {
     this.#merkleTree.insert(leafIndex, nodes)
-    // @TODO come back to this later
-    this.#lastLeafIndex = this.#merkleTree.length
   }
 
   /**
@@ -75,7 +72,6 @@ class NoteCommitmentTree {
    */
   append (nodes: Uint8Array | Uint8Array[]) {
     this.#merkleTree.append(nodes)
-    this.#lastLeafIndex = this.#merkleTree.length
   }
 
   /**
@@ -91,8 +87,7 @@ class NoteCommitmentTree {
      * We can also undo the elements, one by one but current implementation calculate the upper level of tree
      * after every insertion which might make this inefficient
      */
-    this.merkleTree.insert(this.#lastLeafIndex, COMMITMENT_TREE_ZERO_ELEMENT)
-    this.#lastLeafIndex--
+    throw new Error('Not implemented')
   }
 
   /**
@@ -106,7 +101,7 @@ class NoteCommitmentTree {
   /**
    * Generate MerkleProof for given leaf index
    * @param leafIndex - Leaf index in MerkleTree
-   * @returns MerkleProof
+   * @returns MerkleProof for given leaf index
    */
   proof (leafIndex: number) {
     return this.#merkleTree.proof(leafIndex)
