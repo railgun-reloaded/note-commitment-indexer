@@ -33,8 +33,6 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@noble/curves": "^1.9.2",
-    "@noble/hashes": "^1.8.0",
     "@railgun-reloaded/cryptography": "https://github.com/railgun-reloaded/cryptography.git#main",
     "@railgun-reloaded/merkle-tree": "https://github.com/railgun-reloaded/merkle-tree.git#main"
   }
