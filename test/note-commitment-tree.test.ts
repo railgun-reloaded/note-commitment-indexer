@@ -33,7 +33,9 @@ test('Should create commitment tree and verify root for large number of commitme
 test('Should generate valid merkle proofs', (assert) => {
   const tree = new NoteCommitmentTree()
   const testVectorArray = TEST_COMMITMENTS_LARGE.map(c => numberStringToUint8Array(c.toString(), 32))
-  tree.append(testVectorArray)
+  for (const commitment of testVectorArray) {
+    tree.append([commitment])
+  }
   const actual = tree.proof(741)
 
   const expected : MerkleProof = {
