@@ -1,9 +1,9 @@
 /* eslint camelcase: ["error", {allow: [""]}] */
-import { Field } from '@noble/curves/abstract/modular'
 import { keccak_256 } from '@noble/hashes/sha3'
+import { bigintToUint8Array, uint8ArrayToBigInt } from '@railgun-reloaded/cryptography'
 import { SparseMerkleTree } from '@railgun-reloaded/merkle-tree/sparse-merkle-tree.js'
 
-import { poseidonT3 } from './hash'
+import { poseidonHash } from './hash'
 
 const SNARK_PRIME = 21888242871839275222246405745257275088548364400416034343698204186575808495617n
 
@@ -15,7 +15,7 @@ const COMMITMENT_TREE_ELEMENT_LENGTH = 32
 
 // @TODO Fix this
 // Zero Element of Railgun Note Commitment Tree
-const COMMITMENT_TREE_ZERO_ELEMENT = Field(SNARK_PRIME).toBytes(Field(SNARK_PRIME).fromBytes((keccak_256('Railgun'))) % SNARK_PRIME)
+const COMMITMENT_TREE_ZERO_ELEMENT = bigintToUint8Array(uint8ArrayToBigInt((keccak_256('Railgun'))) % SNARK_PRIME)
 
 /**
  * Note Commitment Tree Class for managing note
@@ -45,13 +45,13 @@ class NoteCommitmentTree {
         buf: createOptions.buffer,
         length
       }, {
-        hashFn: poseidonT3,
+        hashFn: poseidonHash,
         bytesPerElement: COMMITMENT_TREE_ELEMENT_LENGTH
       })
     } else {
       this.#merkleTree = SparseMerkleTree.create({
         depth: COMMITMENT_TREE_DEPTH,
-        hashFn: poseidonT3,
+        hashFn: poseidonHash,
         zeroElement: COMMITMENT_TREE_ZERO_ELEMENT
       })
     }
