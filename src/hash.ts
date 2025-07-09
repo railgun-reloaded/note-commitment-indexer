@@ -1,5 +1,4 @@
-import { bytesToHex, hexToBytes } from '@noble/hashes/utils'
-import { poseidon2 } from 'poseidon-lite'
+import { poseidonFunc } from '@railgun-reloaded/cryptography'
 
 /**
  * Poseidon hash of input
@@ -8,10 +7,12 @@ import { poseidon2 } from 'poseidon-lite'
  * @param right - 32 byte right element
  * @returns 32 bytes hash output
  */
-function poseidonT3 (out: Uint8Array, left: Readonly<Uint8Array>, right: Readonly<Uint8Array>) {
-  const hash = poseidon2([`0x${bytesToHex(left)}`, `0x${bytesToHex(right)}`])
-  out.set(hexToBytes(hash.toString(16).padStart(64, '0')))
+function poseidonHash (out: Uint8Array, left: Readonly<Uint8Array>, right: Readonly<Uint8Array>) {
+  // @ts-ignore - Update this when type is updated
+  const hash = poseidonFunc([left, right])
+  // @ts-ignore
+  out.set(hash)
   return out
 }
 
-export { poseidonT3 }
+export { poseidonHash }
