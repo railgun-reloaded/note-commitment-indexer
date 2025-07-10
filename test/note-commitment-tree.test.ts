@@ -16,6 +16,13 @@ test('Should be a valid Railgun Commitment Tree Zero Element', (assert) => {
     174, 59, 159, 252]))
 })
 
+test('Should allocate enough memory for the tree', (assert) => {
+  const tree = new NoteCommitmentTree()
+  const capacity = tree.merkleTree.capacity
+
+  assert.is(capacity, 131071)
+})
+
 test('Should create commitment tree and verify root', async (assert) => {
   const tree = new NoteCommitmentTree()
   const testVectorArray = TEST_COMMITMENTS.map(c => numberStringToUint8Array(c.toString(), 32))
@@ -33,9 +40,8 @@ test('Should create commitment tree and verify root for large number of commitme
 test('Should generate valid merkle proofs', (assert) => {
   const tree = new NoteCommitmentTree()
   const testVectorArray = TEST_COMMITMENTS_LARGE.map(c => numberStringToUint8Array(c.toString(), 32))
-  for (const commitment of testVectorArray) {
-    tree.append([commitment])
-  }
+  tree.append(testVectorArray)
+
   const actual = tree.proof(741)
 
   const expected : MerkleProof = {
@@ -61,4 +67,23 @@ test('Should generate valid merkle proofs', (assert) => {
     ].map(hexToBytes)
   }
   assert.alike(actual, expected)
+})
+
+test('Should serialize/deserialize tree', (assert) => {
+  // Create a tree by inserting leaf n times
+  const tree = new NoteCommitmentTree()
+  const leaves = Array(1000).fill(hexToBytes('27f7c465045e0a4d8bec7c13e41d793734c50006ca08920732ce8c3096261435'))
+  tree.append(leaves)
+
+  const expectedRoot = tree.root()
+
+  // Serialize tree and load it again
+  const { buf, length } = tree.merkleTree.serialize()
+  const deserializedTree = new NoteCommitmentTree({
+    buffer: buf,
+    length
+  })
+
+  const actualRoot = deserializedTree.root()
+  assert.alike(expectedRoot, actualRoot)
 })

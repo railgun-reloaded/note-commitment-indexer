@@ -44,7 +44,7 @@ class NoteCommitmentTree {
     if (createOptions) {
       this.#merkleTree = SparseMerkleTree.from({
         buf: createOptions.buffer,
-        length
+        length: createOptions.length
       }, {
         hashFn: poseidonHash,
         bytesPerElement: COMMITMENT_TREE_ELEMENT_LENGTH
