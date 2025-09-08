@@ -1,10 +1,10 @@
 {
-  "name": "@railgun-reloaded/note-commitment-tree",
+  "name": "@railgun-reloaded/note-commitment-indexer",
   "version": "1.0.0",
   "description": "Note Commitment tree management for Railgun",
-  "homepage": "https://github.com/railgun-reloaded/note-commitment-tree#readme",
+  "homepage": "https://github.com/railgun-reloaded/note-commitment-indexer#readme",
   "bugs": {
-    "url": "https://github.com/railgun-reloaded/note-commitment-tree/issues"
+    "url": "https://github.com/railgun-reloaded/note-commitment-indexer/issues"
   },
   "main": "src/index.js",
   "scripts": {
@@ -24,7 +24,6 @@
   "license": "MIT",
   "devDependencies": {
     "@railgun-reloaded/eslint-config": "^1.1.0",
-    "@railgun-reloaded/subsquid-client": "https://github.com/railgun-reloaded/subsquid-client.git#master",
     "@railgun-reloaded/tsconfig": "^1.2.0",
     "@types/brittle": "^3.5.0",
     "@types/node": "^24.0.12",

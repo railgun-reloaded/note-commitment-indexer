@@ -1,11 +1,11 @@
-# `@railgun-reloaded/note-commitment-tree`
+# `@railgun-reloaded/note-commitment-indexer`
 
 > Note Commitment Tree Implementation used in RAILGUN
 
 ## Install
 
 ```sh
-npm install --save @railgun-reloaded/note-commitment-tree
+npm install --save @railgun-reloaded/note-commitment-indexer
 ```
 
 ## Example Usage
